@@ -1,0 +1,30 @@
+@charset "ISO-8859-1";
+
+.iconLogo {
+	width: 20%;
+    opacity: 85%;
+}
+
+.iconSection {
+	width: 1.25rem;
+}
+
+.mt-rem-7 {
+	margin-top: 7rem;
+}
+
+.login-img {
+	background: url("https://e1.pxfuel.com/desktop-wallpaper/926/919/desktop-wallpaper-football-pitch-soccer-pitch.jpg") !important;
+}
+
+.register-img {
+	background: url("https://i.pinimg.com/550x/13/c6/d3/13c6d3621dddcb5c860f329701b25dad.jpg");
+}
+
+.min-h-rem {
+	min-height: 35rem;
+}
+
+.min-h-10-rem {
+	min-height: 10rem;
+}
