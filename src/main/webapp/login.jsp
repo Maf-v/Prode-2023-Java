@@ -48,6 +48,14 @@
                                     action="<%=request.getContextPath()%>/Login"
                                     method="POST"
                                     >
+	                                    <%
+	                                    	String error = (String)request.getAttribute("error");
+	    									if(error != null) {
+	                                    %>
+	                                    <p class="error-input">
+									    	<%=error %>
+									    </p>
+	                                    <%	} %>
                                         <div class="form-group">
                                             <input type="text" name="inputUsuario" class="form-control form-control-user"
                                                 id="inputUsuario" placeholder="Usuario">
@@ -62,9 +70,6 @@
 										</div>
                                     </form>
                                     <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Recuperar contraseña</a>
-                                    </div>
                                     <div class="text-center">
                                         <a class="small" href="register.jsp">Registrarse</a>
                                     </div>

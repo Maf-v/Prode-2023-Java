@@ -30,17 +30,12 @@ public class Login extends HttpServlet{
 		} catch (Exception e) {
 			e.printStackTrace();
 			req.setAttribute("error", "Usuario no encontrado");
-			System.out.println("Usuario no encontrado");
 			getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
 		}
 		
-		System.out.println(user.getPassword().equals(password));
-		System.out.println(password);
-		System.out.println(String.valueOf(password).equals(user.getPassword()));
 		
 		if(!user.getPassword().equals(password)) {
 			req.setAttribute("error", "Contraseña incorrecta");
-			System.out.println("Contrasena incorrecta");
 			getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
 		} else {
 			req.setAttribute("sucess", "Login correcto");
