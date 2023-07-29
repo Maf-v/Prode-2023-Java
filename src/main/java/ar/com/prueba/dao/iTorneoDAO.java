@@ -13,5 +13,7 @@ public interface iTorneoDAO {
 	public List<Torneo> getByUserId(String userId) throws Exception;
 	
 	public Torneo getById(Long id) throws Exception;
+	
+	public List<Torneo> getByName(String name) throws Exception;
 
 }

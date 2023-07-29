@@ -36,12 +36,15 @@
 
                     <!-- Topbar Search -->
                     <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+                        action="<%=request.getContextPath()%>/SearchResults"
+                        method="get"
+                        >
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            <input type="text" name="searchInput" id="searchInput" class="form-control bg-light border-0 small" placeholder="Buscar torneo"
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -113,15 +116,15 @@
 					        <div class="modal-dialog" role="document">
 					            <div class="modal-content">
 					                <div class="modal-header">
-					                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					                    <h5 class="modal-title" id="exampleModalLabel">Salir</h5>
 					                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
 					                        <span aria-hidden="true">×</span>
 					                    </button>
 					                </div>
-					                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+					                <div class="modal-body">¿Estas seguro que deseas salir?</div>
 					                <div class="modal-footer">
 					                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-					                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/Logout">Logout</a>
+					                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/Logout">Confirmar</a>
 					                </div>
 					            </div>
 					        </div>

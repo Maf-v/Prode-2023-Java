@@ -29,7 +29,6 @@ public class TorneoDAOMysqlImpl implements iTorneoDAO {
 			 statement.execute();			 
 		 } catch (Exception e) {
 			 e.printStackTrace();
-			 System.out.println(e.getMessage());
 		 }
 		 
 		 cerrar(connection);
@@ -78,8 +77,6 @@ public class TorneoDAOMysqlImpl implements iTorneoDAO {
 			torneos.add(torneo);
 		}
 		
-		System.out.println(torneos);
-		
 		cerrar(connection);	
 		return torneos; //
 	}
@@ -90,6 +87,29 @@ public class TorneoDAOMysqlImpl implements iTorneoDAO {
 		Connection connection = AdministradorConexion.getConnection();
 		
 		String sql = "SELECT * FROM `torneos` WHERE id IN (SELECT torneoId FROM `usuarios_torneo` WHERE userId = '"+ userId +"')";
+		
+		Statement statement  = connection.createStatement();
+		
+		ResultSet resultset = statement.executeQuery(sql);
+
+		List<Torneo> torneos = new ArrayList<Torneo>();
+		while(resultset.next()) {
+			Long id = resultset.getLong("id");
+			String nombre = resultset.getString("nombre");
+			Torneo torneo = new Torneo(id,nombre);
+			torneos.add(torneo);
+		}
+		
+		cerrar(connection);
+		return torneos;
+	}
+	
+	@Override
+	public List<Torneo> getByName(String name) throws Exception {
+		//-1 necesito la conection a la base
+		Connection connection = AdministradorConexion.getConnection();
+		
+		String sql = "SELECT * FROM `torneos` WHERE nombre LIKE '%"+ name +"%'";
 		
 		Statement statement  = connection.createStatement();
 		
