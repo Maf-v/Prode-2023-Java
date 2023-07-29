@@ -26,8 +26,6 @@ public class CreatePronosticosController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	    HttpSession session = req.getSession();
 	    String userId = (String) session.getAttribute("uid");
-	    
-	    System.out.println("Llego aca");
 
 	    iPronosticoDAO dao = new PronosticoDAOMysqlImpl();
 
@@ -36,7 +34,6 @@ public class CreatePronosticosController extends HttpServlet {
 
 	    // Iterar sobre los parámetros para procesar los datos de los partidos
 	    for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-	    	System.out.println(entry);
 	        String paramName = entry.getKey();
 	        String[] paramValues = entry.getValue();
 
@@ -53,10 +50,6 @@ public class CreatePronosticosController extends HttpServlet {
 	                scoreAway = "0";
 	            }
 
-	            System.out.println("matchId : " + matchId);
-	            System.out.println("scoreHome : " + scoreHome);
-	            System.out.println("scoreAway : " + scoreAway);
-
 	            Match match = null;
 	            iMatchDAO daoMatch = new MatchDAOMysqlImpl();
 	            try {
@@ -68,7 +61,7 @@ public class CreatePronosticosController extends HttpServlet {
 	            }
 
 	            Pronostico pronostico = new Pronostico(userId, match.getID(), Integer.parseInt(scoreHome),
-	                    Integer.parseInt(scoreAway));
+	            Integer.parseInt(scoreAway), -1);
 	            try {
 	                dao.create(pronostico);
 	            } catch (Exception e) {

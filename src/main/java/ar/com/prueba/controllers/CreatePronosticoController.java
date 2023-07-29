@@ -23,13 +23,10 @@ public class CreatePronosticoController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String matchId = req.getParameter("matchId");
-		System.out.println("matchId : " + matchId);
 		String scoreHome = req.getParameter("homeGoals");
 		if(scoreHome == null) scoreHome = "0";
-		System.out.println("scoreHome : " + scoreHome);
 		String scoreAway = req.getParameter("awayGoals");
 		if(scoreAway == null) scoreAway = "0";
-		System.out.println("scoreAway : " + scoreAway);
 		
 		HttpSession session = req.getSession();
 		String userId = (String)session.getAttribute("uid");

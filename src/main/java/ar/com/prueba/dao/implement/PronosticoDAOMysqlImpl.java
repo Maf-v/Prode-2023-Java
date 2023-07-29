@@ -31,7 +31,6 @@ public class PronosticoDAOMysqlImpl implements iPronosticoDAO {
 			 statement.execute();			 
 		 } catch (Exception e) {
 			 e.printStackTrace();
-			 System.out.println(e.getMessage());
 		 }
 		 
 		 cerrar(connection);
@@ -59,6 +58,27 @@ public class PronosticoDAOMysqlImpl implements iPronosticoDAO {
 		
 		cerrar(connection);
 		return pronosticos;
+	}
+	
+	@Override
+	public void update(Pronostico pronostico) throws Exception {
+		//-1 necesito la conection a la base
+		Connection connection = AdministradorConexion.getConnection();
+		
+		String sql = "UPDATE pronosticos SET puntos = ? WHERE userId = ? AND matchId = ? " ;
+		PreparedStatement statement  = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+		
+		statement.setInt(1, pronostico.getPuntos());
+		statement.setString(2, pronostico.getUserId());
+		statement.setLong(3, pronostico.getMatchID());
+		
+		 try {
+			 statement.execute();			 
+		 } catch (Exception e) {
+			 e.printStackTrace();
+		 }
+		 
+		 cerrar(connection);
 	}
 	
 	private static void cerrar(Connection con) throws Exception{

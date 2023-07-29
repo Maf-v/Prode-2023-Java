@@ -1,4 +1,4 @@
-<%@page import="ar.com.deserialize.Match"%>
+<%@page import="ar.com.deserialize.Partido"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -45,28 +45,56 @@
         		<!-- Begin Page Content -->
                 <div class="container-fluid">
                 
+                	<form class="form-inline align-content-center" method="get" action="<%=request.getContextPath()%>/CreatePronosticos">
+					  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Seleccionar etapa de la Copa:</label>
+					  <select class="custom-select my-1 mr-sm-2" name="etapa" id="etapa">
+					    <option selected>Etapa de la Copa..</option>
+					    <option value="prueba">Prueba</option>
+					    <option value="LAST_16">16vos de final</option>
+					    <option value="LAST_8" class="disabled" disabled>8vos de final</option>
+					    <option value="LAST_4" class="disabled" disabled>4tos de final</option>
+					    <option value="semifinal" class="disabled" disabled>Semifinal</option>
+					    <option value="final" class="disabled" disabled>Final</option>
+					  </select>
+					  <button type="submit" class="btn btn-success col-2">
+						Seleccionar
+					  </button>
+					</form>
+					
+					<%
+					  	String userId = (String)session.getAttribute("uid");
+	            		
+	                    if (userId == null) {
+					%>
+                	
+                	<p class="error-color fs-3 mt-3">Debes registrarte o ingresar para poder completar tus pronosticos</p>
+                	
+                	<% } else { %>
+                	
+                	<%
+							List<Partido> partidos = (List<Partido>)request.getAttribute("partidos");
+							if(partidos != null && !partidos.isEmpty()) {
+                	%>
 					<div class="justify-content-center">
 						<form action="<%=request.getContextPath()%>/NewPronosticos" method="post" class="form">
 						<%
-							
-							for(Match match : (Match[])request.getAttribute("matches")) {
-								
+								for(Partido partido : partidos) {									
 						%>
 								<div class="d-flex justify-content-between w-60 mt-3 mb-3 mx-auto"">
-									<input type="hidden" name="matchId<%=match.getID()%>" id="matchId" value="<%=match.getID() %>">
+									<input type="hidden" name="matchId<%=partido.getId()%>" id="matchId" value="<%=partido.getId() %>">
 									<div class="d-flex bd-highlight w-50">
-									  <img src="<%=match.getHomeTeam().getCrest() %>" class="teamLogo" alt="...">
-									  <div class="p-2 flex-fill bd-highlight text-center align-self-center"><%=match.getHomeTeam().getShortName() %></div>
-									  <input value="0" type="number" name="homeGoals<%=match.getID()%>" id="homeGoals" class="inputForm col-2 h-75 align-self-center" />
+									  <img src="<%=partido.getHomeTeamCrest() %>" class="teamLogo" alt="...">
+									  <div class="p-2 flex-fill bd-highlight text-center align-self-center"><%=partido.getHomeTeamName() %></div>
+									  <input value="0" type="number" name="homeGoals<%=partido.getId()%>" id="homeGoals" class="inputForm col-2 h-75 align-self-center" />
 									</div>
 									<div class="d-flex bd-highlight w-50">
-									  <input value="0" type="number" name="awayGoals<%=match.getID()%>" id="awayGoals" class="inputForm col-2 h-75 align-self-center" />
-									  <div class="p-2 flex-fill bd-highlight text-center align-self-center"><%=match.getAwayTeam().getShortName() %></div>
-									  <img src="<%=match.getAwayTeam().getCrest() %>" class="teamLogo" alt="...">
+									  <input value="0" type="number" name="awayGoals<%=partido.getId()%>" id="awayGoals" class="inputForm col-2 h-75 align-self-center" />
+									  <div class="p-2 flex-fill bd-highlight text-center align-self-center"><%=partido.getAwayTeamName() %></div>
+									  <img src="<%=partido.getAwayTeamCrest() %>" class="teamLogo" alt="...">
 									</div>
 								</div>
 						<%
-							}
+								}
 						%>
 							<div class="row justify-content-center">
 						        <button type="submit" class="btn btn-success col-7 mt-4 mb-5">
@@ -74,6 +102,10 @@
 								</button>
 							</div>
 						</form>
+					<%
+							}
+                		}
+					%>
 						
 																
 						</div>
