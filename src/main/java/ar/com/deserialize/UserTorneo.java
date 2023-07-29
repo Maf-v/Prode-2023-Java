@@ -12,6 +12,13 @@ public class UserTorneo {
 		this.torneoId = torneoId;
 	}
 	
+	public UserTorneo(String userId, Long torneoId, Long puntos, Long id) {
+		this.puntos = puntos;
+		this.id = id;
+		this.userId = userId;
+		this.torneoId = torneoId;
+	}
+	
 	public UserTorneo(String userId, Long puntos, Long torneoId) {
 		this.userId = userId;
 		this.puntos = puntos;

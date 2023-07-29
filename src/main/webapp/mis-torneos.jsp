@@ -70,15 +70,20 @@
                                         <tr>
                                             <td class="col-1"><%=torneo.getId() %></td>
                                             <td class="col-7">
-                                            
-                                            <form method="get" action="<%=request.getContextPath()%>/Torneo" id="form">
-											  <input type="hidden" name="idTorneo" id="idTorneo" value="" /> 
-                                            	<a onclick="setTorneoId(<%=torneo.getId()%>)">
-                                            		<%=torneo.getNombre()%>
-                                            	</a>											  
-											</form>
+	                                            <form method="get" action="<%=request.getContextPath()%>/Torneo" id="form">
+												  <input type="hidden" name="idTorneo" id="idTorneo" value="" /> 
+	                                            	<a onclick="setTorneoIdAndSubmit(<%=torneo.getId()%>)">
+	                                            		<%=torneo.getNombre()%>
+	                                            	</a>											  
+												</form>
                                             </td>
-                                            <td class="col-3"></td>
+                                            <td class="col-3">
+                                               <button type="button" onclick="setTorneoIdForDelete(<%=torneo.getId()%>)" class="btn btn-danger" 
+													data-bs-toggle="modal" 
+													data-bs-target="#salirModal">
+												  Salir
+												</button>
+                                            </td>
                                         </tr>
                                         <% } %>
                                         
@@ -98,25 +103,27 @@
 
 	</div>
 	
-	    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/Logout">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	    <!-- Salirse Modal-->
+ 		<div class="modal fade" id="salirModal" tabindex="-1" aria-labelledby="salirModal" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		    	<form action="<%=request.getContextPath()%>/DeleteUserTorneo" method="POST">
+		    	  <input type="hidden" name="idTorneoDelete" id="idTorneoDelete" value="" /> 
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="unirseTorneo">Salir del Torneo</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        ¿Confirma que desea salir de este Torneo? 
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+			        <button type="submit" class="btn btn-danger">Confirmar</button>
+			      </div>
+		    	</form>
+		    </div>
+		  </div>
+		</div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -133,9 +140,14 @@
 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 	  <script>
-			function setTorneoId(id) {
+			function setTorneoIdAndSubmit(id) {
 				document.getElementById('idTorneo').value=id;
 				document.getElementById('form').submit()
 			}
+			
+			function setTorneoIdForDelete(id) {
+				document.getElementById('idTorneoDelete').value=id;
+			}
+			
 	  </script>
 </html>
