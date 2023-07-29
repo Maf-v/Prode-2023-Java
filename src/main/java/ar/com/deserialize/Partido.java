@@ -41,6 +41,22 @@ public class Partido {
 		this.awayTeamId = awayTeamId;
 	}
 	
+	public Partido (Long id, Long homeTeamId, Long awayTeamId, Integer scoreHome, Integer scoreAway) {
+		this.id = id;
+		this.homeTeamId = homeTeamId;
+		this.awayTeamId = awayTeamId;
+		this.scoreHome = scoreHome;
+		this.scoreAway = scoreAway;
+	}
+	
+	public Partido (Long id, String homeTeamName, String homeTeamCrest, String awayTeamName, String awayTeamCrest) {
+		this.id = id;
+		this.homeTeamName = homeTeamName;
+		this.awayTeamName = awayTeamName;
+		this.homeTeamCrest = homeTeamCrest;
+		this.awayTeamCrest = awayTeamCrest;
+	}
+	
 	
 	public Long getId() {return id;}
 	public String getStatus() { return status;}

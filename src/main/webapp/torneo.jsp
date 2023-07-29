@@ -62,6 +62,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                        	<th class="col-1">Posicion</th>
                                             <th class="col-7">Usuario</th>
                                             <th class="col-2">Puntos</th>
                                         </tr>
@@ -71,13 +72,14 @@
                                     	<%
                 						List<UserTorneo> listUsersTorneo = (List<UserTorneo>)request.getAttribute("users");
                 						
-                						for (UserTorneo user : listUsersTorneo) {
+                						for (Integer i = 1; i < listUsersTorneo.size() + 1; i++) {
 
                                     	%>
                                     
                                         <tr>
-                                            <td class="col-7"><%=user.getUserId()%></td>
-                                            <td class="col-2"><%=user.getPuntos()%></td>
+                                        	<td class="col-1 text-center"><%=i %></td>
+                                            <td class="col-7"><%=listUsersTorneo.get(i-1).getUserId()%></td>
+                                            <td class="col-2"><%=listUsersTorneo.get(i-1).getPuntos()%></td>
                                         </tr>
                                         
                                         <% 
