@@ -25,6 +25,7 @@ public class AdministradorConexion {
 		catch(Exception e){
 			connection = null;
 		}
+		
 		return connection;
 	}
 	
