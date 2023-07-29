@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import ar.com.deserialize.Match;
 import ar.com.deserialize.Partido;
+import ar.com.deserialize.Pronostico;
 import ar.com.prueba.dao.iMatchDAO;
 import ar.com.prueba.db.AdministradorConexion;
 
@@ -55,11 +58,38 @@ public class MatchDAOMysqlImpl implements iMatchDAO{
 			Long matchId = resultset.getLong("id");
 			Long homeTeamId = resultset.getLong("homeTeamId");
 			Long awayTeamId = resultset.getLong("awayTeamId");
-			partido = new Partido(matchId, homeTeamId, awayTeamId);
+			Integer scoreHome = resultset.getObject("scoreHome") == null ? null : resultset.getInt("scoreHome");
+			Integer scoreAway = resultset.getObject("scoreHome") == null ? null : resultset.getInt("scoreAway");
+			
+			partido = new Partido(matchId, homeTeamId, awayTeamId, scoreHome, scoreAway);
 		}
 		
 		cerrar(connection);	
 		return partido;
+	}
+
+	@Override
+	public List<Partido> getPartidosByStage(String stage) throws Exception {
+		//-1 necesito la conection a la base
+		Connection connection = AdministradorConexion.getConnection();
+		
+		String sql = "SELECT * FROM `partidos` WHERE stage = '"  + stage + "'" ;
+		
+		Statement statement  = connection.createStatement();
+		
+		ResultSet resultset = statement.executeQuery(sql);
+		
+		List<Partido> partidos = new ArrayList<Partido>();
+		while(resultset.next()) {
+			Long matchId = resultset.getLong("id");
+			Long homeTeamId = resultset.getLong("homeTeamId");
+			Long awayTeamId = resultset.getLong("awayTeamId");
+			Partido partido = new Partido(matchId, homeTeamId, awayTeamId);
+			partidos.add(partido);
+		}
+		
+		cerrar(connection);	
+		return partidos;
 	}
 	
 	@Override

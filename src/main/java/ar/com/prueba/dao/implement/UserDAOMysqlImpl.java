@@ -33,7 +33,6 @@ public class UserDAOMysqlImpl implements iUserDAO{
 			 statement.execute();			 
 		 } catch (Exception e) {
 			 e.printStackTrace();
-			 System.out.println(e.getMessage());
 		 }
 		 
 		 cerrar(connection);
@@ -57,7 +56,6 @@ public class UserDAOMysqlImpl implements iUserDAO{
 			return new User(userId,password);
 		}
 		cerrar(connection);
-		System.out.println("fallo algo al obtener el usuario");
 		return null;
 	}
 	

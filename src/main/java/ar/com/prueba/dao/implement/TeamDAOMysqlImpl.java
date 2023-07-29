@@ -34,7 +34,6 @@ public class TeamDAOMysqlImpl implements iTeamDAO{
 			 statement.execute();			 
 		 } catch (Exception e) {
 			 e.printStackTrace();
-			 System.out.println(e.getMessage());
 		 }
 		 
 		 cerrar(connection);

@@ -50,11 +50,7 @@ public class TeamUtils extends HttpServlet {
 		Gson gson = new Gson();
 		DeserializeTeams deserialize = gson.fromJson(response.body(), DeserializeTeams.class);
 		
-		System.out.println(deserialize);
-		System.out.println("ESTA BIEN");
-		
 		Team[] teams = deserialize.getTeams();
-		System.out.println(teams);
 		
 		for(Team team : teams) {
 			try {
@@ -63,7 +59,6 @@ public class TeamUtils extends HttpServlet {
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("Fallo al crearlo");
 			}
 		}
 		

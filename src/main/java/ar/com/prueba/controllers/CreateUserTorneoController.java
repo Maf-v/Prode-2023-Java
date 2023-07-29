@@ -18,7 +18,6 @@ public class CreateUserTorneoController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String torneoId = req.getParameter("idTorneo");
-		System.out.println(torneoId);
 		
 		HttpSession session = req.getSession();
 		String userId = (String)session.getAttribute("uid");

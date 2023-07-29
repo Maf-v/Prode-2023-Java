@@ -31,6 +31,6 @@ public class CreateTorneoController extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+		getServletContext().getRequestDispatcher("/ListaTorneos").forward(req, resp);
 	}
 }

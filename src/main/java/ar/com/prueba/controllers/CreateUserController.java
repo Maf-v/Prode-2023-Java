@@ -20,11 +20,22 @@ public class CreateUserController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uid = req.getParameter("inputUsuario");
 		String password = req.getParameter("inputContraseña");
+		String passwordRepeat = req.getParameter("inputContraseñaRepeat");
+		
+		if(!password.equals(passwordRepeat)) {
+			req.setAttribute("error", "Las contraseñas no coinciden");
+			getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
+		}
 		
 		iUserDAO dao = new UserDAOMysqlImpl();
 		User user = new User(uid, password);
 		
 		try {
+			if(dao.getByUid(uid) != null) {
+				req.setAttribute("error", "Ese nombre de usuario ya esta en uso");
+				getServletContext().getRequestDispatcher("/register.jsp").forward(req, resp);
+			}
+			
 			dao.create(user);
 			req.setAttribute("success", "Usuario creado");
 			

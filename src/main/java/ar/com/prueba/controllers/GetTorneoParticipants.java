@@ -25,8 +25,6 @@ public class GetTorneoParticipants extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String torneoId = req.getParameter("idTorneo");
 		
-		System.out.println(torneoId);
-		
 		iUserTorneoDAO dao = new UserTorneoDAOMysqlImpl();
 		List<UserTorneo> listUserTorneo = new ArrayList<>();
 		try {

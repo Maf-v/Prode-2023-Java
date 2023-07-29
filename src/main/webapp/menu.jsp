@@ -66,7 +66,7 @@
             </li>
             
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/CrearPronosticos">
+                <a class="nav-link" href="<%=request.getContextPath()%>/crear-pronostico.jsp">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Nuevo Pronostico</span></a>
             </li>
