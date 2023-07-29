@@ -21,11 +21,8 @@ public class AdministradorConexion {
 			//url de conexion
 			String url ="jdbc:mysql://"+hosts+":"+port+"/"+nombredb+"?serverTimeZone=UTC&useSSL=false";
 			connection = DriverManager.getConnection(url, username, password);
-			System.out.println("Conecto Bien!!");
 		}
 		catch(Exception e){
-			System.out.println("No conecto!!");
-			System.out.println(e.getMessage());
 			connection = null;
 		}
 		
