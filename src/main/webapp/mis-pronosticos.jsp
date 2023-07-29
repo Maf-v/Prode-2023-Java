@@ -1,5 +1,6 @@
 <%@page import="ar.com.deserialize.Partido"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -24,7 +25,6 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/prueba.css" /> 
 
 </head>
 <body id="page-top">
@@ -43,28 +43,50 @@
         		<jsp:include page="top-bar.jsp"/>
         	
         		<!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid">         
 				
 				<%
-					List<Partido> partidos = (List<Partido>)request.getAttribute("partidos");
+				List<Partido> partidos = (List<Partido>)request.getAttribute("partidos");
+				Map<Long,Integer> mapPartidoPuntos = (Map<Long,Integer>)request.getAttribute("mapPartidoPuntos");
 				
+				if(partidos.size() == 0) {
+				%>
+					<h2 class="text-center mt-5">Aun no tienes pronosticos guardados</h2>
+				<% 
+				} else {
+				%>	
+					<h4 class="m-3">Mis Pronosticos: </h4>
+				<%
 					for(Partido partido : partidos) {
 				%>
-				
-					<div class="d-flex justify-content-between w-60 mt-3 mb-3 mx-auto"">
-						<div class="d-flex bd-highlight w-50">
-							<img src="<%=partido.getHomeTeamCrest() %>" class="teamLogo" alt="...">
+					<div class="d-flex justify-content-between w-52 mt-3 mb-3 mx-auto">
+						<div class="d-flex bd-highlight col-5">
+							<img src="<%=partido.getHomeTeamCrest() %>" class="equipoEscudo" alt="...">
 							<div class="p-2 flex-fill bd-highlight text-center align-self-center"><%=partido.getHomeTeamName() %></div>
-							<input value="<%=partido.getScoreHome() %>" type="number" name="homeGoals" id="homeGoals" class="inputForm col-2 h-75 align-self-center" />
+							<input value="<%=partido.getScoreHome() %>" type="number" name="homeGoals" id="homeGoals" class="inputForm only-read col-2 h-75 align-self-center" readonly/>
 						</div>
-					<div class="d-flex bd-highlight w-50">
-						<input value="<%=partido.getScoreAway() %>" type="number" name="awayGoals" id="awayGoals" class="inputForm col-2 h-75 align-self-center" />
-						<div class="p-2 flex-fill bd-highlight text-center align-self-center"><%=partido.getAwayTeamName() %></div>
-							<img src="<%=partido.getAwayTeamCrest() %>" class="teamLogo" alt="...">
+						<div class="d-flex bd-highlight col-5">
+							<input value="<%=partido.getScoreAway() %>" type="number" name="awayGoals" id="awayGoals" class="inputForm only-read col-2 h-75 align-self-center" readonly/>
+							<div class="p-2 flex-fill bd-highlight text-center align-self-center"><%=partido.getAwayTeamName() %></div>
+							<img src="<%=partido.getAwayTeamCrest() %>" class="equipoEscudo" alt="...">
 						</div>
+					<%
+						if( mapPartidoPuntos.get(partido.getId()) < 0 ) {
+					%>
+						<div class="col-2 d-flex">
+							<p class="points"> - </p>
+						</div>
+					<% } else { %>
+						<div class="col-2 d-flex">
+							<p class="points"> <%=mapPartidoPuntos.get(partido.getId()) %> </p>
+						</div>
+					<% } %>
 					</div>
 				
-				<% } %>
+				<% 
+					}
+				  }
+				%>
                 </div>
                 <!-- /.container-fluid -->
                 
@@ -74,25 +96,6 @@
 		</div>
 
 	</div>
-		    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/Logout">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
 	
 	    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

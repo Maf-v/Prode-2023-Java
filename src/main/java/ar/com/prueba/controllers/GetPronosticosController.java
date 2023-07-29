@@ -3,17 +3,22 @@ package ar.com.prueba.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import ar.com.deserialize.Match;
 import ar.com.deserialize.Partido;
 import ar.com.deserialize.Pronostico;
+import ar.com.deserialize.UserTorneo;
 import ar.com.deserialize.Team;
 import ar.com.prueba.dao.iTeamDAO;
 import ar.com.prueba.dao.iPronosticoDAO;
 import ar.com.prueba.dao.iMatchDAO;
+import ar.com.prueba.dao.iUserTorneoDAO;
 import ar.com.prueba.dao.implement.MatchDAOMysqlImpl;
 import ar.com.prueba.dao.implement.PronosticoDAOMysqlImpl;
 import ar.com.prueba.dao.implement.TeamDAOMysqlImpl;
+import ar.com.prueba.dao.implement.UserTorneoDAOMysqlImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +39,7 @@ public class GetPronosticosController extends HttpServlet{
 	    
 	    iMatchDAO daoMatch = new MatchDAOMysqlImpl();
 	    iTeamDAO daoTeam = new TeamDAOMysqlImpl();
+	    iUserTorneoDAO daoUserTorneo = new UserTorneoDAOMysqlImpl();
 	    
 	    try {
 			pronosticos = dao.getByUserId(userId);
@@ -42,6 +48,8 @@ public class GetPronosticosController extends HttpServlet{
 		}
 	    
 	    List<Partido> partidos = new ArrayList<>();
+	    Map<Long,Integer> mapPartidoPuntos = new HashMap<Long,Integer>();
+	    Long puntosTorneo = Long.valueOf(0);
 	    for (Pronostico pronostico: pronosticos) {
 	    	Long matchId = pronostico.getMatchID();
 	    	try {
@@ -54,6 +62,16 @@ public class GetPronosticosController extends HttpServlet{
 				String awayTeamCrest = awayTeam.getCrest();
 				Integer scoreHome = pronostico.getScoreHome();
 				Integer scoreAway = pronostico.getScoreAway();
+
+				Integer puntos = UpdatePronosticoController.calculatePoints(pronostico, partido);
+				
+				if(puntos != -1) {
+					puntosTorneo += puntos;					
+				}
+				pronostico.setPuntos(puntos);
+				dao.update(pronostico);
+				mapPartidoPuntos.put(pronostico.getMatchID(), puntos);
+				
 				Partido p = new Partido(matchId ,homeTeamName, scoreHome, homeTeamCrest, awayTeamName, scoreAway, awayTeamCrest);
 				partidos.add(p);
 			} catch (Exception e) {
@@ -61,7 +79,21 @@ public class GetPronosticosController extends HttpServlet{
 			}
 	    }
 
+	    List<UserTorneo> userTorneoList = new ArrayList<>();
+		try {
+			userTorneoList = (List<UserTorneo>) daoUserTorneo.getByUserId(userId);
+			for(UserTorneo userTorneo : userTorneoList) {
+				if(puntosTorneo != userTorneo.getPuntos()) {
+					userTorneo.setPuntos(puntosTorneo);
+					daoUserTorneo.update(userTorneo);	    	
+				}				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	    
 	    req.setAttribute("partidos", partidos);
+	    req.setAttribute("mapPartidoPuntos", mapPartidoPuntos);
 	    getServletContext().getRequestDispatcher("/mis-pronosticos.jsp").forward(req, resp);
 	}
 	
