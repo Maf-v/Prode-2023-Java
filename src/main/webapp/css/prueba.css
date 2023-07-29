@@ -5,8 +5,34 @@
     width: 3rem;
 }
 
+option.disabled {
+	color: #adb3b3;
+}
+
+.equipoEscudo {
+	height: 2.5rem;
+    width: 2.5rem;
+}
+
 .w-60 {
 	width: 60%;
+}
+
+.w-40 {
+	width: 40%;
+}
+
+.w-52 {
+	width: 52%;
+}
+
+.points {
+	border-radius: 8px;
+    border: solid 1px;
+    margin: auto;
+    padding: 0.5rem 1.1rem;
+    background: #abb5d445;
+    color: #517e7e;
 }
 
 .inputForm {
@@ -16,7 +42,7 @@
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
-    background-color: #fff;
+    background-color: #ffff;
     background-clip: padding-box;
     border: 1px solid #ced4da;
     -webkit-appearance: none;
@@ -25,6 +51,11 @@
     border-radius: 0.25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     text-align: center;
+    flex: 0 0 20%;
+}
+
+.only-read {
+	background-color: #f0ffff;
 }
 
 input[type='number']::-webkit-inner-spin-button, 
