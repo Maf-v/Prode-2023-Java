@@ -1,5 +1,6 @@
 <%@page import="ar.com.deserialize.Torneo"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.Set"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -65,6 +66,7 @@
                                     <tbody>
                                     
                                     	<%
+                                            Set<Long> userTorneosIds = (Set<Long>)request.getAttribute("userTorneosIds");
                                     		List<Torneo> torneos = (List<Torneo>)request.getAttribute("torneos");
                                     	
                                     		for(Torneo torneo : torneos) {
@@ -74,12 +76,33 @@
                                             <td class="col-1"><%=torneo.getId()%></td>
                                             <td class="col-7"><%=torneo.getNombre()%></td>
                                             <td class="col-3">
+                                            
+                                            	<%
+                                            		if( !userTorneosIds.contains(torneo.getId()) ) {
+                                            	%>
+                                            
                                             	<button type="button" class="btn btn-success" 
 													data-bs-toggle="modal" 
 													data-bs-target="#unirseModal" 
 													onclick="setTorneoId(<%=torneo.getId()%>)">
 												  Unirse
 												</button>
+												
+												<% 
+                                            		} else {
+												%>
+												
+												<button type="button" class="btn btn-success" 
+													data-bs-toggle="modal" 
+													data-bs-target="#unirseModal" 
+													onclick="setTorneoId(<%=torneo.getId()%>)" disabled>
+												  Unirse
+												</button>
+												
+												<%
+                                            		}
+												%>
+												
 											</td>
 
                                         </tr>
